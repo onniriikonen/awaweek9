@@ -1,5 +1,11 @@
 import MyList from './MyList'
-import React, { useState } from 'react'
+import { useState } from 'react'
+
+type TItem = {
+    id: string;
+    text: string;
+};
+
 
 const MyContainer = () => {
     const [items, setItems] = useState<TItem[]>([
