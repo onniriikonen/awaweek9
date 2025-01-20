@@ -2,16 +2,17 @@ import MyList from './MyList'
 import { useState } from 'react'
 
 type TItem = {
-    id: string;
-    text: string;
-};
+    id: string
+    text: string
+    clicked: boolean
+}
 
 
 const MyContainer = () => {
     const [items, setItems] = useState<TItem[]>([
-        { id: '1', text: 'Item' },
-        { id: '2', text: 'Item' },
-        { id: '3', text: 'Item' },
+        { id: '1', text: 'Item', clicked: false },
+        { id: '2', text: 'Item', clicked: false },
+        { id: '3', text: 'Item', clicked: false },
     ])
 
     const [newText, setNewText] = useState('')
@@ -22,10 +23,19 @@ const MyContainer = () => {
             const newItem: TItem = {
                 id: Date.now().toString(),
                 text: newText.trim(),
+                clicked: false,
             }
             setItems([...items, newItem])
             setNewText('')
         }
+    }
+
+    const updateList = (id: string) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === id ? { ...item, clicked: !item.clicked } : item
+            )
+        )
     }
 
 
@@ -39,7 +49,7 @@ const MyContainer = () => {
             />
             <button onClick={addItem}>Add Item</button>
 
-            <MyList header="My List" items={items} />
+            <MyList header="My List" items={items} updateList={updateList} />
         </div>
     )
 }
